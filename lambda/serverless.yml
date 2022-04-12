@@ -23,6 +23,11 @@ frameworkVersion: '3'
 provider:
   name: aws
   runtime: nodejs12.x
+  region: us-east-1
+  apiGateway:
+    shouldStartNameWithService: true
+
+
 
 # you can overwrite defaults here
 #  stage: dev
@@ -61,6 +66,19 @@ provider:
 functions:
   hello:
     handler: handler.hello
+    events:
+      - http:
+          method: GET
+          path: /
+          cors: true
+  getOrder:
+    handler: src/get-order.handler
+    events:
+      - http:
+          method: GET
+          path: /orders/get-order/{id}
+          cors: true
+
 #    The following are a few example events you can configure
 #    NOTE: Please make sure to change your handler code to work with those events
 #    Check the event documentation for details
